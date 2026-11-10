@@ -6,7 +6,7 @@
 [![ESP32](https://img.shields.io/badge/ESP--IDF-ESP32%20DevKit-red?logo=espressif&logoColor=white)](https://www.espressif.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Sistem pelacak manusia (*real-time human tracking*) dan penyeimbang kamera aktif (*self-stabilizing 2-axis gimbal*) berbasis **Hybrid Architecture**. Pemrosesan Computer Vision tingkat lanjut (YOLOv8-pose) dijalankan secara lokal dengan akselerasi GPU CUDA (RTX 4050), sedangkan komputasi stabilisasi IMU serta aktuasi motor servo dikendalikan secara presisi oleh mikrokontroler ESP32.
+Sistem pelacak manusia (*real-time human tracking*) dan penyeimbang kamera aktif (*self-stabilizing 2-axis gimbal*) berbasis **Hybrid Architecture**. Pemrosesan Computer Vision tingkat lanjut (YOLOv8-pose) dan kontrol gerak berkecepatan tinggi dirancang untuk kebutuhan *tracking* manusia secara stabil dan responsif pada platform low-cost.
 
 ---
 
@@ -40,7 +40,7 @@ Proyek ini menggunakan pemisahan tugas secara modular (*hybrid computing*):
                                           (Pan & Tilt Mechanism)
 ```
 
-1. **Vision & AI Unit (Laptop):** Menarik *stream* video mentah dari webcam, mendeteksi kerangka manusia, menghitung selisih galat (*error offset*) dari titik tengah bidang pandang $(640, 360)$, dan mentransmisikan instruksi koreksi sudut.
+1. **Vision & AI Unit (Laptop):** Menarik *stream* video mentah dari webcam, mendeteksi kerangka manusia, menghitung selisih galat (*error offset*) dari titik tengah bidang pandang $(640, 360)$, dan menyampaikan target posisi ke unit kontrol.
 2. **Motion Control Unit (ESP32):** Mengukur orientasi fisik platform secara lokal, menghitung algoritma peredam goyangan, dan memadukan koreksi sudut gimbal dengan perintah pelacakan visual ke motor servo.
 
 ---
@@ -104,8 +104,8 @@ Pastikan Python 3.10+ dan CUDA Toolkit 12.x sudah terpasang.
 
 ```bash
 # Clone repository
-git clone https://github.com/username/smart-gimbal-human-tracking.git
-cd smart-gimbal-human-tracking
+git clone https://github.com/Fazelds21/Smart-Gimbal-Human-Tracking.git
+cd Smart-Gimbal-Human-Tracking
 
 # Buat virtual environment
 python -m venv venv
@@ -138,7 +138,7 @@ python src/vision_pipeline.py
 ## 📁 Struktur Direktori
 
 ```text
-smart-gimbal-human-tracking/
+Smart-Gimbal-Human-Tracking/
 ├── firmware/
 │   ├── esp32_gimbal_controller/
 │   │   └── esp32_gimbal_controller.ino   # Firmware Arduino IDE untuk ESP32
@@ -152,7 +152,8 @@ smart-gimbal-human-tracking/
 │   └── system_architecture.png           # Blok diagram sistem
 ├── requirements.txt                      # Daftar dependensi Python
 ├── LICENSE                               # Lisensi MIT
-└── README.md                             # Dokumentasi utama
+├── README.md                             # Dokumentasi utama
+└── .gitignore
 ```
 
 ---
@@ -172,4 +173,4 @@ smart-gimbal-human-tracking/
 ---
 
 ## 📄 Lisensi
-Proyek ini didistribusikan di bawah lisensi **MIT License**. Silakan gunakan, pelajari, dan kembangkan untuk kebutuhan penelitian, tugas akhir, maupun portofolio profesional Anda.
+Proyek ini didistribusikan di bawah lisensi **MIT License**. Hak cipta © 2026 **Fazelds21**. Silakan gunakan, pelajari, dan kembangkan untuk kebutuhan penelitian, tugas akhir, maupun portofolio profesional Anda.
